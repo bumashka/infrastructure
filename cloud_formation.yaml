@@ -12,7 +12,7 @@ parameters:
 
 resources:
 
-  http_secgroup:
+  web_secgroup:
     type: OS::Neutron::SecurityGroup
     properties:
       rules:
@@ -24,10 +24,10 @@ resources:
 #          remote_ip_prefix: 0.0.0.0/0
 #          port_range_min: 443
 #          port_range_max: 443
-  mysql_secgroup:
-    type: OS::Neutron::SecurityGroup
-    properties:
-      rules:
+        - protocol: tcp
+          remote_ip_prefix: 0.0.0.0/0
+          port_range_min: 22
+          port_range_max: 22
         - protocol: tcp
           remote_ip_prefix: 0.0.0.0/0
           port_range_min: 3306       # mysql port
@@ -51,15 +51,6 @@ resources:
       networks:
         - port: { get_resource: server2_port}
   
-  instance3_bd:
-    type: OS::Nova::Server
-    properties:
-      key_name: { get_param: key_name }
-      image: ubuntu-22.04
-      flavor: m1.small
-      networks:
-      - port: { get_resource: server3_bd }
-  
   server1_port:
     type: OS::Neutron::Port
     properties:
@@ -73,15 +64,6 @@ resources:
       network_id:  { get_param: network_name } # sutdents.net ID
       security_groups:
           - { get_resource: http_secgroup }
-          - { get_resource: mysql_secgroup}
-  
-  server3_bd:
-    type: OS::Neutron::Port
-    properties:
-      network_id:  { get_param: network_name } # sutdents.net ID
-      security_groups:
-          - { get_resource: mysql_secgroup }
-  
   
   server1_floating_ip:
     type: OS::Neutron::FloatingIP
