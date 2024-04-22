@@ -1,6 +1,6 @@
 ﻿heat_template_version: 2015-04-30
 
-description: Template to deploy two instances
+description: Template to deploy 3 instances
 
 parameters:
   key_name:
