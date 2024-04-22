@@ -56,14 +56,14 @@ resources:
     properties:
       network_id:  { get_param: network_name } # sutdents.net ID
       security_groups:
-        - { get_resource: http_secgroup }
+        - { get_resource: web_secgroup }
   
   server2_port:
     type: OS::Neutron::Port
     properties:
       network_id:  { get_param: network_name } # sutdents.net ID
       security_groups:
-          - { get_resource: http_secgroup }
+          - { get_resource: web_secgroup }
   
   server1_floating_ip:
     type: OS::Neutron::FloatingIP
